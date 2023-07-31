@@ -14,6 +14,7 @@ import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
   const {last} = useData();
+
   return <>
     <header>
       <Menu />
@@ -117,11 +118,11 @@ const Page = () => {
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
         <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
+          imageSrc={last?.cover || 'https://img.freepik.com/free-icon/user_318-563642.jpg?w=360'}
+          title={last?.title || '{last?.title}'}
           date={new Date(last?.date)}
           small
-          label="boom"
+          label="{[]}"
         />
       </div>
       <div className="col contact">

@@ -12,19 +12,19 @@ describe("When a event card is created", () => {
     expect(imageElement).toBeInTheDocument();
     expect(imageElement.alt).toEqual("image-alt-text");
   });
-  it("a title, a label and a month are displayed", () => {
+  it("a title, a label and a month are displayed", async () => {
     render(
       <EventCard
         imageSrc="http://src-image"
         imageAlt="image-alt-text"
         title="test event"
         label="test label"
-        date={new Date("2022-04-01")}
+        date={new Date("2022-04-01")} 
       />
     );
-    const titleElement = screen.getByText(/test event/);
-    const monthElement = screen.getByText(/avril/);
-    const labelElement = screen.getByText(/test label/);
+    const titleElement = await screen.findByText("test event");
+    const monthElement = await screen.findByText("avril");
+    const labelElement = await screen.findByText("test label");
     expect(titleElement).toBeInTheDocument();
     expect(labelElement).toBeInTheDocument();
     expect(monthElement).toBeInTheDocument();

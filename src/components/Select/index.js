@@ -37,7 +37,7 @@ const Select = ({
                 </li>
               )}
               {selection.map((s) => (
-                <li key={s} onClick={() => changeValue(s)}>
+                <li key={s} onClick={() => changeValue()}>
                   <input
                     defaultChecked={value === s}
                     name="selected"
