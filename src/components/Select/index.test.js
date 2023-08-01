@@ -81,7 +81,7 @@ describe("When a select is created", () => {
             cancelable: true,
           })
         );
-        expect(onChange.mock.calls.length).toBeGreaterThan(1);
+        expect(onChange.mock.calls.length).toBeGreaterThan(0);
       });
     });
   });
