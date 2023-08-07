@@ -25,7 +25,6 @@ const Slider = () => {
   });
 
   useEffect(() => {
-    console.log();
   }, [getMonth]);
 
   return (
@@ -46,20 +45,20 @@ const Slider = () => {
               </div>
             </div>
           </div>
-          <div className="SlideCard__paginationContainer">
+           <div className="SlideCard__paginationContainer">
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
                 <input
-                  key={radioIdx.index}
+                  key={`${radioIdx +1}`}
                   type="radio"
                   name="radio-button"
                   checked={index === radioIdx}
-                  onChange={() => index(radioIdx)}
+                  onChange={() => nextCard(radioIdx)}
                 />
               ))}
             </div>
           </div>
-        </div>
+        </div> 
       ))}
     </div>
   );

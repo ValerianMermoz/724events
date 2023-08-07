@@ -4,7 +4,7 @@ import Field, { FIELD_TYPES } from "../../components/Field";
 import Select from "../../components/Select";
 import Button, { BUTTON_TYPES } from "../../components/Button";
 
-const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 1000); })
+const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 900); })
 
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
@@ -29,8 +29,8 @@ const Form = ({ onSuccess, onError }) => {
     <form onSubmit={sendContact}>
       <div className="row">
         <div className="col">
-          <Field placeholder="Veuillez saisir votre nom" label="Nom" />
-          <Field placeholder="Veuillez saisir votre prénom" label="Prénom" />
+          <Field placeholder="Veuillez saisir votre nom" label="Nom" required />
+          <Field placeholder="Veuillez saisir votre prénom" label="Prénom" required />
           <Select
             selection={["Personel", "Entreprise"]}
             onChange={() => null}
@@ -38,7 +38,7 @@ const Form = ({ onSuccess, onError }) => {
             type="large"
             titleEmpty
           />
-          <Field type={FIELD_TYPES.INPUT_MAIL}placeholder="Veuillez saisir votre email" label="Email" />
+          <Field type={FIELD_TYPES.INPUT_MAIL}placeholder="Veuillez saisir votre email" label="Email" required />
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending} onClick={onSuccess}>
             {sending ? "En cours" : "Envoyer"}
           </Button>

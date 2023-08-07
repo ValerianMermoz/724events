@@ -10,10 +10,10 @@ import Logo from "../../components/Logo";
 import Icon from "../../components/Icon";
 import Form from "../../containers/Form";
 import Modal from "../../containers/Modal";
-import DataContext, { useData } from "../../contexts/DataContext";
+import  { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const { last } = useData(DataContext);
+  const { last } = useData();
 
   return (
     <>
@@ -24,7 +24,7 @@ const Page = () => {
         <section className="SliderContainer">
           <Slider />
         </section>
-        <section className="ServicesContainer">
+        <section className="ServicesContainer" id="services">
           <h2 className="Title">Nos services</h2>
           <p>Nous organisons des événements sur mesure partout dans le monde</p>
           <div className="ListContainer">
@@ -53,11 +53,11 @@ const Page = () => {
             </ServiceCard>
           </div>
         </section>
-        <section className="EventsContainer">
+        <section className="EventsContainer" id="realisations">
           <h2 className="Title">Nos réalisations</h2>
           <EventList />
         </section>
-        <section className="PeoplesContainer">
+        <section className="PeoplesContainer" id="equipe">
           <h2 className="Title">Notre équipe</h2>
           <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
           <div className="ListContainer">
@@ -115,13 +115,14 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
-          <EventCard
-            imageSrc={last?.cover || "last?.cover"}
-            title={last?.title || "last?.title"}
-            date={new Date(last?.date) || "last?.date"}
+          {(last)?<EventCard
+            imageSrc={last.cover}
+            title={last.title}
+            date={new Date(last.date)}
+            label={last.type}
             small
-            label="{['last?.date']}"
-          />
+          /> : ''}
+
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>

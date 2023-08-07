@@ -11,10 +11,25 @@ const PER_PAGE = 9;
 
 const EventList = () => {
   const { data, error } = useData();
-  const [type, setType] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const filteredEvents = ((!type ? data?.events : data?.events) || []).filter(
-    (event, index) => {
+  const [type, setType] = useState('Toutes');
+  const [currentPage, setCurrentPage] = useState();
+
+  
+  const changeType = (evtType) => {
+    const foundEvents = data?.events.filter((event) => event.type === evtType);
+    // console.log('LENGTH ==> ', foundEvents.length);
+    setCurrentPage(foundEvents.length);
+    setType(evtType);
+  };
+
+  const sortedEvents = data?.events
+    ? [...data.events].sort(
+        (evtA, evtB) => new Date(evtB.date) - new Date(evtA.date)
+      )
+    : [];
+
+  const filteredEvents = ((!type ? sortedEvents : sortedEvents) || []) 
+    .filter((index) => {
       if (
         (currentPage - 1) * PER_PAGE <= index &&
         PER_PAGE * currentPage > index
@@ -22,14 +37,20 @@ const EventList = () => {
         return true;
       }
       return false;
+    });
+
+  const getEventByType = (eventType) => {
+    if (eventType === 'Toutes')
+    {
+       return data?.events
     }
-  );
-  const changeType = (evtType) => {
-    setCurrentPage(1);
-    setType(evtType);
-  };
+    const foundEvents = data?.events.filter((event) => event.type === eventType);
+    return foundEvents || null;
+  }
+
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
   const typeList = new Set(data?.events.map((event) => event.type));
+
   return (
     <>
       {error && <div>An error occured</div>}
@@ -38,15 +59,12 @@ const EventList = () => {
       ) : (
         <>
           <h3 className="SelectTitle">Catégories</h3>
-          <Select selection={Array.from(typeList)} onChange={changeType} />
+          <Select onChange={changeType} selection={Array.from(typeList)} />
           <div id="events" className="ListContainer">
-            {filteredEvents
-              .sort((evtA, evtB) =>
-                new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
-              )
-              .map((event) => (
-                <Modal key={event.id} Content={<ModalEvent event={event} />}>
-                  {({ setIsOpened }) => (
+            {getEventByType(type)
+              ?.map((event) => (
+                 <Modal key={event.id} Content={<ModalEvent event={event} />}>
+                   {({ setIsOpened }) => (
                     <EventCard
                       key={event}
                       onClick={() => setIsOpened(true)}
@@ -55,8 +73,8 @@ const EventList = () => {
                       date={new Date(event.date)}
                       label={event.type}
                     />
-                  )}
-                </Modal>
+                   )}
+                 </Modal>
               ))}
           </div>
           <div className="Pagination">
