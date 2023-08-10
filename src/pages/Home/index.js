@@ -55,7 +55,7 @@ const Page = () => {
         </section>
         <section className="EventsContainer" id="realisations">
           <h2 className="Title">Nos réalisations</h2>
-          <EventList />
+          <EventList/>
         </section>
         <section className="PeoplesContainer" id="equipe">
           <h2 className="Title">Notre équipe</h2>
@@ -121,6 +121,7 @@ const Page = () => {
             date={new Date(last.date)}
             label={last.type}
             small
+            data-testid="last-event"
           /> : ''}
 
         </div>

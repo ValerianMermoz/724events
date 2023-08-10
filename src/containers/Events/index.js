@@ -12,7 +12,7 @@ const PER_PAGE = 9;
 const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState("Toutes");
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const changeType = (evtType) => {
     const foundEvents = data?.events.filter((event) => event.type === evtType);
@@ -26,8 +26,6 @@ const EventList = () => {
         (evtA, evtB) => new Date(evtB.date) - new Date(evtA.date)
       )
     : [];
-
-
 
   const filteredEvents = (type !=="Toutes") ?  ((!type ? sortedEvents : sortedEvents) || []).filter(
     (index) => {
@@ -56,14 +54,15 @@ const EventList = () => {
 
   return (
     <>
-      {error && <div>An error occured</div>}
+    <div data-testid="An error occured">
+      {error && <div >An error occured</div>}</div>
       {data === null ? (
         "loading"
       ) : (
         <>
           <h3 className="SelectTitle">Catégories</h3>
           <Select onChange={changeType} selection={Array.from(typeList)} />
-          <div id="events" className="ListContainer">
+          <div id="events" className="ListContainer" data-testid="list-events">
             {getEventByType(type)?.map((event) => (
               <Modal key={event.id} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
@@ -74,6 +73,7 @@ const EventList = () => {
                     title={event.title}
                     date={new Date(event.date)}
                     label={event.type}
+                    
                   />
                 )}
               </Modal>

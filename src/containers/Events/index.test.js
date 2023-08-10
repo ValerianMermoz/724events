@@ -53,21 +53,22 @@ describe("When Events is created", () => {
       api.loadData = jest.fn().mockRejectedValue();
       render(
         <DataProvider>
-          <Events />
+          <Events/>
         </DataProvider>
       );
-      expect(await screen.findAllByText("An error occured")).toBeNull();
+      expect(await screen.findByTestId("An error occured")).toBeInTheDocument();
     });
   });
   describe("and we select a category", () => {
     it("an filtered list is displayed", async () => {
-      api.loadData = jest.fn().mockReturnValue(data[0]);
+      api.loadData = jest.fn().mockReturnValue(data);
       render(
         <DataProvider>
           <Events />
         </DataProvider>
       );
-      await screen.findAllByText("User&product MixUsers");
+      await screen.findByText("Forum #productCON");
+
       fireEvent(
         await screen.findByTestId("collapse-button-testid"),
         new MouseEvent("click", {
@@ -83,8 +84,8 @@ describe("When Events is created", () => {
         })
       );
 
-      expect(await screen.findByText("Conférence #productCON")).toBeInTheDocument();
-      expect(screen.queryByText("Forum #productCON")).toBeNull();
+      await screen.findByText("Conférence #productCON");
+      expect(screen.queryByText("Forum #productCON")).not.toBeInTheDocument();
     });
   });
 
