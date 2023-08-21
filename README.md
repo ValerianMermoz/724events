@@ -7,4 +7,4 @@
 
 
 <h2>Aperçu du projet</h2>
-<img src="https://github.com/ValerianMermoz/Kasa/raw/main/Kasa/src/Images/Overview.png">
+<img src="https://github.com/ValerianMermoz/724events/blob/main/public/images/Overview.png">
